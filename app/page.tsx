@@ -7,6 +7,7 @@ import AddressInput from "./components/AddressInput";
 import { Footer } from "./components/Footer";
 import Logo from "./components/Logo";
 import Map from "./components/Map";
+import ProjectListDropdown from "./components/ProjectListDropdown";
 import { PollingLocation } from "./types/pollingLocation";
 import { titleize } from "./utils/titleize";
 
@@ -133,8 +134,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <header className="bg-white shadow-sm py-4">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 flex justify-between items-center">
           <Logo />
+          <ProjectListDropdown />
         </div>
       </header>
       <main
@@ -175,14 +177,15 @@ export default function Home() {
                     {titleize(pollingLocation.USER_Location2)}
                   </p>
                   <p className="text-gray-700">{pollingLocation.Match_addr}</p>
+                  {pollingLocation.USER_HP_Entrance && (
+                    <p className="text-gray-700">
+                      <strong>Entrance:</strong>{" "}
+                      {titleize(pollingLocation.USER_HP_Entrance)}
+                    </p>
+                  )}
                   <p className="text-gray-700 italic">
                     {titleize(pollingLocation.USER_Voting_Roo)}
                   </p>
-                  {pollingLocation.USER_HP_Entrance && (
-                    <p className="text-gray-700">
-                      Entrance: {titleize(pollingLocation.USER_HP_Entrance)}
-                    </p>
-                  )}
                 </div>
 
                 {/* <VotingSquad /> */}
