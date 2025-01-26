@@ -27,9 +27,28 @@ export default function Home() {
     useState<PollingLocation | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+  if (!googleMapsApiKey) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+        <div className="bg-white p-6 rounded-lg shadow-md text-center">
+          <h2 className="text-xl font-semibold mb-4">Configuration Required</h2>
+          <p className="text-gray-700 mb-4">
+            Please create a <code>.env.local</code> file in the root of your
+            project and add your Google Maps API key:
+          </p>
+          <pre className="bg-gray-100 p-4 rounded">
+            NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=YOUR_API_KEY_HERE
+          </pre>
+        </div>
+      </div>
+    );
+  }
+
   // Load the Google Maps JavaScript API once at the parent level
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+    googleMapsApiKey,
     libraries,
   });
 
@@ -156,7 +175,7 @@ export default function Home() {
                     {titleize(pollingLocation.USER_Location2)}
                   </p>
                   <p className="text-gray-700">{pollingLocation.Match_addr}</p>
-                  <p className="text-gray-700">
+                  <p className="text-gray-700 italic">
                     {titleize(pollingLocation.USER_Voting_Roo)}
                   </p>
                   {pollingLocation.USER_HP_Entrance && (
