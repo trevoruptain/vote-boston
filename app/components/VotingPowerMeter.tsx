@@ -27,7 +27,7 @@ export default function VotingPowerMeter() {
       </div>
       <p className="mt-2 text-sm text-gray-600">
         {power.toFixed(1)}% of eligible voters in your area are registered.
-        Let's make it 100%!
+        Let&apos;s make it 100%!
       </p>
     </div>
   );

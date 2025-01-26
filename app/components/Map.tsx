@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
 import { Navigation } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PollingLocation } from "../types/pollingLocation";
 
 interface MapProps {
@@ -26,11 +26,14 @@ export default function Map({
     useState<google.maps.DirectionsResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Define polling location coordinates from pollingLocation
-  const pollingCoords: Coordinates = {
-    lat: pollingLocation.POINT_Y,
-    lng: pollingLocation.POINT_X,
-  };
+  // Define polling location coordinates from pollingLocation using useMemo
+  const pollingCoords: Coordinates = useMemo(
+    () => ({
+      lat: pollingLocation.POINT_Y,
+      lng: pollingLocation.POINT_X,
+    }),
+    [pollingLocation]
+  );
 
   // Calculate and set directions once Maps is loaded
   useEffect(() => {
