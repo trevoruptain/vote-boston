@@ -20,6 +20,10 @@ export function titleize(str: string): string {
     "it",
   ]);
 
+  if (str.length === 0) {
+    return "";
+  }
+
   return str
     .toLowerCase()
     .split(" ")

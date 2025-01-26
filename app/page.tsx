@@ -7,7 +7,6 @@ import AddressInput from "./components/AddressInput";
 import { Footer } from "./components/Footer";
 import Logo from "./components/Logo";
 import Map from "./components/Map";
-import VotingSquad from "./components/VotingSquad";
 import { PollingLocation } from "./types/pollingLocation";
 import { titleize } from "./utils/titleize";
 
@@ -130,8 +129,7 @@ export default function Home() {
               Find Your Polling Location
             </h1>
             <p className="text-xl text-gray-600">
-              Enter your address to discover your nearest polling location and
-              create your Voting Squad!
+              Enter your address to discover your nearest polling location!
             </p>
 
             {/* Pass the isLoaded flag to AddressInput so it can use the google API for Autocomplete */}
@@ -168,7 +166,7 @@ export default function Home() {
                   )}
                 </div>
 
-                <VotingSquad />
+                {/* <VotingSquad /> */}
               </div>
             )}
           </div>
