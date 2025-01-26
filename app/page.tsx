@@ -8,6 +8,7 @@ import Logo from "./components/Logo";
 import Map from "./components/Map";
 import VotingSquad from "./components/VotingSquad";
 import { PollingLocation } from "./types/pollingLocation";
+import { titleize } from "./utils/titleize";
 
 const libraries = ["places", "drawing", "geometry", "visualization"] as (
   | "places"
@@ -149,15 +150,15 @@ export default function Home() {
                     Your Nearest Polling Location:
                   </h2>
                   <p className="text-gray-700">
-                    {pollingLocation.USER_Location2}
+                    {titleize(pollingLocation.USER_Location2)}
                   </p>
                   <p className="text-gray-700">{pollingLocation.Match_addr}</p>
                   <p className="text-gray-700">
-                    {pollingLocation.USER_Voting_Roo}
+                    {titleize(pollingLocation.USER_Voting_Roo)}
                   </p>
                   {pollingLocation.USER_HP_Entrance && (
                     <p className="text-gray-700">
-                      Entrance: {pollingLocation.USER_HP_Entrance}
+                      Entrance: {titleize(pollingLocation.USER_HP_Entrance)}
                     </p>
                   )}
                 </div>
