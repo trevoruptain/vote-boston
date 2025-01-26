@@ -4,6 +4,7 @@ import { useJsApiLoader } from "@react-google-maps/api";
 import { useCallback, useEffect, useState } from "react";
 
 import AddressInput from "./components/AddressInput";
+import { Footer } from "./components/Footer";
 import Logo from "./components/Logo";
 import Map from "./components/Map";
 import VotingSquad from "./components/VotingSquad";
@@ -118,7 +119,11 @@ export default function Home() {
           <Logo />
         </div>
       </header>
-      <main className="flex-grow flex items-center">
+      <main
+        className={`flex flex-col flex-grow overflow-y-auto ${
+          !selectedAddress ? "justify-start" : "justify-center"
+        }`}
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-8 py-12">
             <h1 className="text-4xl font-extrabold text-gray-900">
@@ -169,6 +174,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
