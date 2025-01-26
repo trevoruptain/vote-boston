@@ -5,8 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Vote Boston",
-  description:
-    "Find your polling location and check your voting power in Boston",
+  description: "Find your polling location in Boston",
 };
 
 export default function RootLayout({
@@ -16,6 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );
