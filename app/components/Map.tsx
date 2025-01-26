@@ -1,17 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  DirectionsRenderer,
-  GoogleMap,
-  Marker,
-  useJsApiLoader,
-} from "@react-google-maps/api";
+import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
 import { Navigation } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { PollingLocation } from "../types/pollingLocation";
 
 interface MapProps {
-  address: string;
+  isLoaded: boolean;
+  userCoordinates: { lat: number; lng: number };
+  pollingLocation: PollingLocation;
 }
 
 interface Coordinates {
@@ -19,89 +17,54 @@ interface Coordinates {
   lng: number;
 }
 
-export default function Map({ address }: MapProps) {
-  const [userCoordinates, setUserCoordinates] = useState<Coordinates | null>(
-    null
-  );
+export default function Map({
+  isLoaded,
+  userCoordinates,
+  pollingLocation,
+}: MapProps) {
   const [directions, setDirections] =
     useState<google.maps.DirectionsResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Define polling location coordinates (Boston City Hall)
-  const pollingLocation: Coordinates = {
-    lat: 42.3581, // Approximate latitude
-    lng: -71.0636, // Approximate longitude
+  // Define polling location coordinates from pollingLocation
+  const pollingCoords: Coordinates = {
+    lat: pollingLocation.POINT_Y,
+    lng: pollingLocation.POINT_X,
   };
 
-  // Load Google Maps JavaScript API
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-    libraries: ["places"],
-  });
-
-  // Geocode the user's address to get coordinates
-  const geocodeAddress = useCallback(() => {
-    if (!address) return;
-
-    const geocoder = new google.maps.Geocoder();
-
-    geocoder.geocode({ address }, (results, status) => {
-      if (status === "OK" && results && results[0]) {
-        const location = results[0].geometry.location;
-        setUserCoordinates({ lat: location.lat(), lng: location.lng() });
-      } else {
-        console.error(
-          "Geocode was not successful for the following reason: " + status
-        );
-        setError("Unable to geocode the provided address.");
-      }
-    });
-  }, [address]);
-
+  // Calculate and set directions once Maps is loaded
   useEffect(() => {
-    if (isLoaded) {
-      geocodeAddress();
-    }
-  }, [isLoaded, geocodeAddress]);
+    if (!isLoaded) return;
+    if (!window.google) return;
 
-  // Calculate and set directions
-  useEffect(() => {
-    if (userCoordinates && isLoaded) {
-      const directionsService = new google.maps.DirectionsService();
+    const directionsService = new window.google.maps.DirectionsService();
 
-      directionsService.route(
-        {
-          origin: userCoordinates,
-          destination: pollingLocation,
-          travelMode: google.maps.TravelMode.WALKING,
-        },
-        (result, status) => {
-          if (status === google.maps.DirectionsStatus.OK && result) {
-            setDirections(result);
-          } else {
-            console.error("Directions request failed due to " + status);
-            setError("Unable to fetch directions.");
-          }
+    directionsService.route(
+      {
+        origin: userCoordinates,
+        destination: pollingCoords,
+        travelMode: window.google.maps.TravelMode.WALKING,
+      },
+      (result, status) => {
+        if (status === window.google.maps.DirectionsStatus.OK && result) {
+          setDirections(result);
+        } else {
+          console.error("Directions request failed due to " + status);
+          setError("Unable to fetch directions.");
         }
-      );
-    }
-  }, [userCoordinates, isLoaded]);
+      }
+    );
+  }, [isLoaded, userCoordinates, pollingCoords]);
 
   const handleGetDirections = () => {
     if (!userCoordinates) return;
 
-    const origin = encodeURIComponent(address);
-    const destination = encodeURIComponent(
-      "1 City Hall Square, Boston, MA 02201"
-    );
+    const origin = `${userCoordinates.lat},${userCoordinates.lng}`;
+    const destination = `${pollingCoords.lat},${pollingCoords.lng}`;
     const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`;
 
     window.open(url, "_blank");
   };
-
-  if (loadError) {
-    return <div>Error loading maps</div>;
-  }
 
   if (!isLoaded) {
     return <div>Loading Map...</div>;
@@ -111,24 +74,30 @@ export default function Map({ address }: MapProps) {
     return <div className="text-red-500">{error}</div>;
   }
 
+  const mapContainerStyle = { width: "100%", height: "100%" };
+
   return (
     <div className="relative w-full h-96 rounded-md overflow-hidden shadow-lg">
-      {userCoordinates && (
-        <GoogleMap
-          mapContainerStyle={{ width: "100%", height: "100%" }}
-          center={userCoordinates}
-          zoom={14}
-        >
-          {/* User's Marker */}
-          <Marker position={userCoordinates} label="A" />
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        center={userCoordinates}
+        zoom={14}
+      >
+        {/* Your custom markers (these have black text by default) */}
+        <Marker position={userCoordinates} label="A" />
+        <Marker position={pollingCoords} label="B" />
 
-          {/* Polling Location Marker */}
-          <Marker position={pollingLocation} label="B" />
-
-          {/* Directions Renderer */}
-          {directions && <DirectionsRenderer directions={directions} />}
-        </GoogleMap>
-      )}
+        {/* 
+          DirectionsRenderer also adds a default A/B marker (white text),
+          so we suppress those by passing options={{ suppressMarkers: true }}
+        */}
+        {directions && (
+          <DirectionsRenderer
+            directions={directions}
+            options={{ suppressMarkers: true }}
+          />
+        )}
+      </GoogleMap>
 
       <div className="absolute bottom-4 left-4">
         <Button onClick={handleGetDirections}>

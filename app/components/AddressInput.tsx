@@ -1,53 +1,54 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { Loader } from "@googlemaps/js-api-loader";
 import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const loader = new Loader({
-  apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-  libraries: ["places"],
-});
+interface AddressInputProps {
+  isLoaded: boolean;
+  onAddressSelect: (address: string) => void;
+}
 
 export default function AddressInput({
+  isLoaded,
   onAddressSelect,
-}: {
-  onAddressSelect: (address: string) => void;
-}) {
+}: AddressInputProps) {
   const [address, setAddress] = useState("");
   const [suggestions, setSuggestions] = useState<
     google.maps.places.AutocompletePrediction[]
   >([]);
   const [loading, setLoading] = useState(false);
+
+  // Create a reference to the AutocompleteService instance
   const autocompleteService =
     useRef<google.maps.places.AutocompleteService | null>(null);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
+  // Initialize AutocompleteService when the script is loaded
   useEffect(() => {
-    loader
-      .load()
-      .then(() => {
-        if (!autocompleteService.current && window.google) {
-          autocompleteService.current =
-            new window.google.maps.places.AutocompleteService();
-        }
-      })
-      .catch((e) => {
-        console.error("Error loading Google Maps: ", e);
-      });
-  }, []);
+    if (isLoaded && !autocompleteService.current && window.google) {
+      autocompleteService.current =
+        new window.google.maps.places.AutocompleteService();
+    }
+  }, [isLoaded]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setAddress(value);
 
+    // Clear previous debounce
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
 
-    if (value.length > 2 && autocompleteService.current) {
+    if (!autocompleteService.current || !window.google) {
+      // If the service isn't ready yet, just return
+      return;
+    }
+
+    if (value.length > 2) {
       setLoading(true);
+      // Debounce the API call
       debounceTimeout.current = setTimeout(() => {
         autocompleteService.current!.getPlacePredictions(
           {
@@ -96,7 +97,7 @@ export default function AddressInput({
           {[...Array(3)].map((_, index) => (
             <li
               key={index}
-              className="px-4 py-2 cursor-pointer hover:bg-gray-100 animate-pulse"
+              className="px-4 py-2 cursor-default hover:bg-gray-50 animate-pulse"
             >
               <div className="h-4 bg-gray-200 rounded"></div>
             </li>
