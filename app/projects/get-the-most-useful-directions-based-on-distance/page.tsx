@@ -46,12 +46,12 @@ export default function GetTheMostUsefulDirectionsBasedOnDistance() {
                 Locate the <code>handleGetDirections</code> function.
               </li>
               <li>
-                Modify the function to check the distance between the user's
-                location and the polling location.
+                Modify the function to check the distance between the
+                user&apos;s location and the polling location.
               </li>
               <li>
-                If the distance is greater than 1 mile, use 'transit' as the
-                travel mode; otherwise, use 'walking'.
+                If the distance is greater than 1 mile, use <code>transit</code>{" "}
+                as the travel mode; otherwise, use <code>walking</code>.
               </li>
               <li>Update the button text to reflect the chosen travel mode.</li>
               <li>
@@ -83,14 +83,14 @@ export default function GetTheMostUsefulDirectionsBasedOnDistance() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm">
-                    "I need to modify the `handleGetDirections` function in my
-                    `Map.tsx` file to choose between walking and transit
+                    &quot;I need to modify the `handleGetDirections` function in
+                    my `Map.tsx` file to choose between walking and transit
                     directions based on the distance to the polling location. If
                     the distance is greater than 1 mile, it should use transit
                     directions; otherwise, it should use walking directions. The
                     button text should also update accordingly. Can you help me
-                    implement this change? Here's the current content of
-                    `Map.tsx`: [paste the entire content of Map.tsx here]"
+                    implement this change? Here&apos;s the current content of
+                    `Map.tsx`: [paste the entire content of Map.tsx here]&quot;
                   </p>
                 </CardContent>
               </Card>
