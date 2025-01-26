@@ -4,10 +4,7 @@ import { useJsApiLoader } from "@react-google-maps/api";
 import { useCallback, useEffect, useState } from "react";
 
 import AddressInput from "./components/AddressInput";
-import { Footer } from "./components/Footer";
-import Logo from "./components/Logo";
 import Map from "./components/Map";
-import ProjectListDropdown from "./components/ProjectListDropdown";
 import { PollingLocation } from "./types/pollingLocation";
 import { titleize } from "./utils/titleize";
 
@@ -132,69 +129,60 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
-      <header className="bg-white shadow-sm py-4">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <Logo />
-          <ProjectListDropdown />
-        </div>
-      </header>
-      <main
-        className={`flex flex-col flex-grow overflow-y-auto ${
-          !selectedAddress ? "justify-start" : "justify-center"
-        }`}
-      >
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center space-y-8 py-12">
-            <h1 className="text-4xl font-extrabold text-gray-900">
-              Find Your Polling Location
-            </h1>
-            <p className="text-xl text-gray-600">
-              Enter your address to discover your nearest polling location!
-            </p>
+    <main
+      className={`flex flex-col flex-grow overflow-y-auto ${
+        !selectedAddress ? "justify-start" : "justify-center"
+      }`}
+    >
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto text-center space-y-8 py-12">
+          <h1 className="text-4xl font-extrabold text-gray-900">
+            Find Your Polling Location
+          </h1>
+          <p className="text-xl text-gray-600">
+            Enter your address to discover your nearest polling location!
+          </p>
 
-            {/* Pass the isLoaded flag to AddressInput so it can use the google API for Autocomplete */}
-            <AddressInput
-              isLoaded={isLoaded}
-              onAddressSelect={setSelectedAddress}
-            />
+          {/* Pass the isLoaded flag to AddressInput so it can use the google API for Autocomplete */}
+          <AddressInput
+            isLoaded={isLoaded}
+            onAddressSelect={setSelectedAddress}
+          />
 
-            {error && <div className="text-red-500">{error}</div>}
+          {error && <div className="text-red-500">{error}</div>}
 
-            {selectedAddress && pollingLocation && userCoordinates && (
-              <div className="space-y-8 mt-8">
-                <Map
-                  isLoaded={isLoaded}
-                  userCoordinates={userCoordinates}
-                  pollingLocation={pollingLocation}
-                />
+          {selectedAddress && pollingLocation && userCoordinates && (
+            <div className="space-y-8 mt-8">
+              <Map
+                isLoaded={isLoaded}
+                userCoordinates={userCoordinates}
+                pollingLocation={pollingLocation}
+              />
 
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                  <h2 className="text-xl font-semibold mb-4">
-                    Your Nearest Polling Location:
-                  </h2>
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h2 className="text-xl font-semibold mb-4">
+                  Your Nearest Polling Location:
+                </h2>
+                <p className="text-gray-700">
+                  {titleize(pollingLocation.USER_Location2)}
+                </p>
+                <p className="text-gray-700">{pollingLocation.Match_addr}</p>
+                {pollingLocation.USER_HP_Entrance && (
                   <p className="text-gray-700">
-                    {titleize(pollingLocation.USER_Location2)}
+                    <strong>Entrance:</strong>{" "}
+                    {titleize(pollingLocation.USER_HP_Entrance)}
                   </p>
-                  <p className="text-gray-700">{pollingLocation.Match_addr}</p>
-                  {pollingLocation.USER_HP_Entrance && (
-                    <p className="text-gray-700">
-                      <strong>Entrance:</strong>{" "}
-                      {titleize(pollingLocation.USER_HP_Entrance)}
-                    </p>
-                  )}
-                  <p className="text-gray-700 italic">
-                    {titleize(pollingLocation.USER_Voting_Roo)}
-                  </p>
-                </div>
-
-                {/* <VotingSquad /> */}
+                )}
+                <p className="text-gray-700 italic">
+                  {titleize(pollingLocation.USER_Voting_Roo)}
+                </p>
               </div>
-            )}
-          </div>
+
+              {/* <VotingSquad /> */}
+            </div>
+          )}
         </div>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </main>
   );
 }
