@@ -133,12 +133,17 @@ export default function Home() {
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center space-y-8 py-12">
+        <div className="max-w-3xl mx-auto text-center space-y-4 py-12">
           <h1 className="text-4xl font-extrabold text-gray-900">
             Find Your Polling Location
           </h1>
           <p className="text-xl text-gray-600">
             Enter your address to discover your nearest polling location!
+          </p>
+          <p className="text-red-500 flex items-center justify-center">
+            This app is still under development - take results with a grain of
+            salt. Want to contribute? Click the code icon in the top right to
+            see the remaining tasks.
           </p>
 
           {/* Pass the isLoaded flag to AddressInput so it can use the google API for Autocomplete */}
