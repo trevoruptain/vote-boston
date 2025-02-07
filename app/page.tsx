@@ -1,7 +1,7 @@
 "use client";
 
 import { useJsApiLoader } from "@react-google-maps/api";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import AddressInput from "./components/AddressInput";
 import Map from "./components/Map";
@@ -31,8 +31,31 @@ export default function Home() {
     libraries,
   });
 
-  // Function to geocode address
+  // Refs for rate limiting geocode requests:
+  // - Allow maximum 1 request per second.
+  // - Allow maximum 10 requests per session.
+  const geocodeRequestCountRef = useRef<number>(0);
+  const lastGeocodeRequestTimeRef = useRef<number>(0);
+
+  // Function to geocode an address with rate limiting applied.
   const geocodeAddress = useCallback(async (address: string) => {
+    // If the maximum number of requests has been reached, throw an error.
+    if (geocodeRequestCountRef.current >= 10) {
+      throw new Error(
+        "Too many requests. Please refresh the page to try again."
+      );
+    }
+
+    const now = Date.now();
+    const timeSinceLastRequest = now - lastGeocodeRequestTimeRef.current;
+    if (timeSinceLastRequest < 1000) {
+      throw new Error("Too many requests. Please try again later.");
+    }
+
+    // Update the last request time and increment the request count.
+    lastGeocodeRequestTimeRef.current = Date.now();
+    geocodeRequestCountRef.current++;
+
     if (!window.google) {
       throw new Error("Google Maps is not loaded yet.");
     }
@@ -53,7 +76,7 @@ export default function Home() {
     });
   }, []);
 
-  // Function to fetch nearest polling location
+  // Function to fetch the nearest polling location.
   const fetchNearestPollingLocation = useCallback(
     async (userLat: number, userLng: number) => {
       try {
@@ -82,7 +105,7 @@ export default function Home() {
     []
   );
 
-  // Handle selected address change
+  // Handle changes to the selected address.
   useEffect(() => {
     if (!isLoaded || !selectedAddress) {
       setUserCoordinates(null);
@@ -141,7 +164,6 @@ export default function Home() {
             Enter your address to discover your nearest polling location!
           </p>
 
-          {/* Pass the isLoaded flag to AddressInput so it can use the google API for Autocomplete */}
           <AddressInput
             isLoaded={isLoaded}
             onAddressSelect={setSelectedAddress}
@@ -175,8 +197,6 @@ export default function Home() {
                   {titleize(pollingLocation.USER_Voting_Roo)}
                 </p>
               </div>
-
-              {/* <VotingSquad /> */}
             </div>
           )}
         </div>

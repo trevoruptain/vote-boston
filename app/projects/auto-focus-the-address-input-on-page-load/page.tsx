@@ -23,8 +23,8 @@ export default function AutoFocusAddressInput() {
           </CardTitle>
           <CardDescription className="text-md">
             <strong>Problem:</strong> Currently, when the page loads, the user
-            has to click on the input field with the placeholder "Enter your
-            address" before they can start typing.
+            has to click on the input field with the placeholder &quot;Enter
+            your address&quot; before they can start typing.
             <br />
             <strong>Solution:</strong> Automatically focus the input field when
             the page loads so the user can start typing right away.
@@ -38,8 +38,8 @@ export default function AutoFocusAddressInput() {
                 Open the file <code>app/components/AddressInput.tsx</code>.
               </li>
               <li>
-                Find the input on line 86. It has the placeholder "Enter your
-                address".
+                Find the input on line 95. It has the placeholder &quot;Enter
+                your address&quot;.
               </li>
               <li>
                 Copy the entire content of the file and paste it into your
@@ -47,8 +47,8 @@ export default function AutoFocusAddressInput() {
               </li>
               <li>
                 Prompt your AI (e.g. ChatGPT, Claude, or Gemini) to update the
-                code so that the input with placeholder "Enter your address"
-                automatically receives focus when the page loads.
+                code so that the input with placeholder &quot;Enter your
+                address&quot; automatically receives focus when the page loads.
               </li>
               <li>
                 Review the updated code from the AI and update your file
@@ -83,8 +83,9 @@ export default function AutoFocusAddressInput() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm">
-                    The input with the placeholder "Enter your address" should
-                    automatically get focus when the page loads.
+                    The input with the placeholder &quot;Enter your
+                    address&quot; should automatically get focus when the page
+                    loads.
                   </p>
                 </CardContent>
               </Card>

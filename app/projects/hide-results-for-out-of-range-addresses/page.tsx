@@ -24,8 +24,8 @@ export default function HideResultsForOutOfRangeAddresses() {
           <CardDescription className="text-md">
             <strong>Problem:</strong> When a user&apos;s address is far from any
             polling location (e.g. more than 10 miles away), the app shows a
-            generic error message ("Error: Failed to fetch polling location.").
-            This can be confusing.
+            generic error message (&quot;Error: Failed to fetch polling
+            location.&quot;). This can be confusing.
             <br />
             <strong>Solution:</strong> Update the code so that if the computed
             distance is greater than 10 miles, no polling location is returned.
@@ -40,9 +40,9 @@ export default function HideResultsForOutOfRangeAddresses() {
               <li>
                 Open both <code>app/api/nearest-polling-location/route.ts</code>{" "}
                 and <code>app/page.tsx</code>. The route is the backend API
-                route that computes the distance between the user's address and
-                the nearest polling location. The page is the frontend code that
-                displays the map.
+                route that computes the distance between the user&apos;s address
+                and the nearest polling location. The page is the frontend code
+                that displays the map.
               </li>
               <li>
                 Copy the entire content of both files and paste them together
@@ -52,10 +52,10 @@ export default function HideResultsForOutOfRangeAddresses() {
                 Ask your AI to update the code so that if the computed distance
                 is greater than 10 miles, no polling location is returned from
                 the backend, and the UI displays a friendly message with a link
-                to the City of Boston's polling location info. For example, the
-                message could read: "We couldn&apos;t find a nearby polling
-                location. Please check the City of Boston's polling locations
-                for more info."
+                to the City of Boston&apos;s polling location info. For example,
+                the message could read: &quot;We couldn&apos;t find a nearby
+                polling location. Please check the City of Boston&apos;s polling
+                locations for more info.&quot;
               </li>
               <li>
                 Review the updated code from the AI and update your files
@@ -95,9 +95,9 @@ export default function HideResultsForOutOfRangeAddresses() {
                     polling location. Please ensure that if the computed
                     distance is greater than 10 miles, no polling location is
                     returned. Instead, the UI should display a friendly message
-                    such as "We couldn&apos;t find a nearby polling location.
-                    Please check the City of Boston's polling locations for more
-                    info." with a link to:
+                    such as &quot;We couldn&apos;t find a nearby polling
+                    location. Please check the City of Boston&apos;s polling
+                    locations for more info.&quot; with a link to:
                     https://www.boston.gov/departments/elections/city-boston-polling-locations
                     <br />
                     <br />

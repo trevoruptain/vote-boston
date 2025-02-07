@@ -23,9 +23,9 @@ export default function GetTheMostUsefulDirectionsBasedOnDistance() {
             Get the Most Useful Directions Based on Distance
           </CardTitle>
           <CardDescription className="text-md">
-            <strong>Problem:</strong> The current "Get Directions" link always
-            uses walking directions—even when the polling location is more than
-            1 mile away.
+            <strong>Problem:</strong> The current &quot;Get Directions&quot;
+            link always uses walking directions—even when the polling location
+            is more than 1 mile away.
             <br />
             <strong>Solution:</strong> Update the code so that if the distance
             to the polling location is greater than 1 mile, the app uses transit
@@ -42,9 +42,9 @@ export default function GetTheMostUsefulDirectionsBasedOnDistance() {
               <li>
                 Find the <code>handleGetDirections</code> function within that
                 file. Understand that it constructs a URL for Google Maps
-                directions using the user's coordinates as the origin and the
-                polling location's coordinates as the destination. It then opens
-                this URL in a new tab to provide walking directions.
+                directions using the user&apos;s coordinates as the origin and
+                the polling location&apos;s coordinates as the destination. It
+                then opens this URL in a new tab to provide walking directions.
               </li>
               <li>
                 Copy the entire content of <code>Map.tsx</code> and paste it
@@ -52,7 +52,7 @@ export default function GetTheMostUsefulDirectionsBasedOnDistance() {
               </li>
               <li>
                 Ask your AI (e.g. ChatGPT, Claude, or Gemini) to modify the code
-                so that if the distance between the user's location and the
+                so that if the distance between the user&apos;s location and the
                 polling location is greater than 1 mile, it uses transit
                 directions; otherwise, it uses walking directions. Also, update
                 the button text to reflect the chosen travel mode.
@@ -64,9 +64,9 @@ export default function GetTheMostUsefulDirectionsBasedOnDistance() {
               <li>
                 Test the updated code by opening the app and checking if the
                 directions are correct. Our polling locations are scoped to
-                Boston and we don't yet hide out of range addresses (we will fix
-                this soon), so you can test this by entering an address that is
-                far away from a polling location.
+                Boston and we don&apos;t yet hide out of range addresses (we
+                will fix this soon), so you can test this by entering an address
+                that is far away from a polling location.
               </li>
             </ol>
           </div>
@@ -94,7 +94,7 @@ export default function GetTheMostUsefulDirectionsBasedOnDistance() {
                 <CardContent>
                   <p className="text-sm">
                     Right now we only have walking directions. If the distance
-                    between the user's location and the polling location is
+                    between the user&apos;s location and the polling location is
                     greater than 1 mile, we should instead return transit
                     directions. Also, update the button text to reflect the
                     chosen travel mode.

@@ -19,10 +19,11 @@ export default function AddressInput({
   >([]);
   const [loading, setLoading] = useState(false);
 
-  // Create a reference to the AutocompleteService instance
   const autocompleteService =
     useRef<google.maps.places.AutocompleteService | null>(null);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+  // Reference to track the time of the last API call (in milliseconds)
+  const lastRequestTime = useRef<number>(0);
 
   // Initialize AutocompleteService when the script is loaded
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function AddressInput({
     const value = e.target.value;
     setAddress(value);
 
-    // Clear previous debounce
+    // Clear any previous debounce timer
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
@@ -48,8 +49,16 @@ export default function AddressInput({
 
     if (value.length > 2) {
       setLoading(true);
-      // Debounce the API call
+      // Debounce the API call by 300ms
       debounceTimeout.current = setTimeout(() => {
+        const now = Date.now();
+        // If less than 1 second has passed since the last API call, cancel this one.
+        if (now - lastRequestTime.current < 1000) {
+          setLoading(false);
+          return;
+        }
+        // Update the last request time and call the API
+        lastRequestTime.current = now;
         autocompleteService.current!.getPlacePredictions(
           {
             input: value,
