@@ -8,15 +8,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 export default function HideResultsForOutOfRangeAddresses() {
   const [showPrompt, setShowPrompt] = useState(false);
 
   return (
-    <div className="flex flex-col flex-grow overflow-y-auto justify-center py-12">
+    <div className="flex flex-col flex-grow overflow-y-auto justify-center items-center py-12">
       <Card className="w-full max-w-3xl mx-auto">
+        <Button
+          onClick={() => (window.location.href = "/")}
+          variant="outline"
+          className="self-start mb-4 flex items-center border-none shadow-none m-2"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Home Page
+        </Button>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-3xl">
             Hide Results for Out of Range Addresses
