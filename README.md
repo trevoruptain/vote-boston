@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-You must first create a Replit account at [Replit](https://replit.com/). Then, request an invite link from <a href="mailto:trevoruptain@gmail.com">Trevor</a> (students will get a link before class).
+You must first create a [Replit account](https://replit.com/). Then, request an invite link from <a href="mailto:trevoruptain@gmail.com">Trevor</a> (students will get a link before class).
 
 You will also need a [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai), or [Gemini](https://gemini.google.com) account to complete the prompt engineering exercises.
 
