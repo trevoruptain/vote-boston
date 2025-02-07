@@ -58,14 +58,17 @@ export async function POST(request: Request) {
       }
     });
 
-    if (!nearestLocation) {
+    // Convert distance from kilometers to miles
+    const minDistanceInMiles = minDistance * 0.621371;
+
+    if (!nearestLocation || minDistanceInMiles > 10) {
       return NextResponse.json(
-        { error: "No polling locations found" },
+        { error: "No polling locations found within 10 miles" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ nearestLocation, distance: minDistance });
+    return NextResponse.json({ nearestLocation, distance: minDistanceInMiles });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

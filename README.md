@@ -32,24 +32,22 @@ You can view the files in the Replit workspace in the left sidebar:
 
 This is a Next.js app written with TypeScript. It contains both the frontend and backend code in a single project.
 
-Open `app/data/polling-locations.csv`. This is the polling location data from the city of Boston.
+**Hint: Keep this README open in a second tab.** If you get lost, you can always refer back to it.
 
-Open `app/api/nearest-polling-location/route.ts` and take a look at the code. This is the backend HTTP route that is called when you search for a polling location. It returns the single nearest polling location from a list of polling locations given a latitude and longitude.
-
-Open `app/page.tsx` and take a look at the code. This is the frontend code that loads Google Maps and allows you to search for a polling location.
+- Open `app/data/polling-locations.csv`. This is the polling location data from the city of Boston.
+- Open `app/api/nearest-polling-location/route.ts` and take a look at the code. This is the backend HTTP route that is called when you search for a polling location. It returns the single nearest polling location from a list of polling locations given a latitude and longitude.
+- Open `app/page.tsx` and take a look at the code. This is the frontend code that loads Google Maps and allows you to search for a polling location.
 
 This code may feel a bit out of your depth, especially if you don't have experience with TypeScript or Next.js. That's okay! The whole point of this project is to let AI do the heavy lifting for us. With prompt engineering, it's often better to understand the code at a high level, rather than in depth.
 
-<div style="background-color: #f9fafb; border-left: 4px solid #3b82f6; padding: 16px; margin: 16px 0; border-radius: 4px; color: #333;">
-  <strong>Why is it better to understand the code at a high level?</strong> Because our attention is limited. If we try to understand the code in depth, we'll get lost in the details and not see the big picture. By understanding the big picture, we can make better decisions about how to improve the app faster.
-</div>
+> Why is it better to understand the code at a high level? **Because our attention is limited.** If we try to understand the code in depth, we'll get lost in the details and not see the big picture. By understanding the big picture, we can make better decisions about how to improve the app faster.
 
 The goal of this app is to make it easy for Boston residents to find their nearest polling location. However, while we've made a lot of progress, this app is not ready to ship to real users yet. Here are just some of the issues that we need to fix:
 
 - You may have noticed that the page content "jumps" to the middle of the page momentarily the first time you select an address. We need to add a loading state while the map loads.
 - We should present at least 2-3 alternative polling locations if they're relatively close to the target address. By limiting the user to a single location, we may unintentionally hinder their voting experience.
 
-In the next step, we'll use AI to fix these and other issues.
+In the next step, we'll use AI to fix these and other issues that currently block us from shipping to production.
 
 ### Step 4: Prompt Engineering
 
