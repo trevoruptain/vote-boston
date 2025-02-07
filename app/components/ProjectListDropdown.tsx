@@ -23,7 +23,6 @@ const projects = [
     title: "Auto-focus the address input on page load",
     href: "/projects/auto-focus-the-address-input-on-page-load",
     icon: <ScanEye className="h-4 w-4 flex-shrink-0" />,
-    disabled: true,
     difficulty: "easy",
   },
   {
@@ -38,14 +37,12 @@ const projects = [
     title: "Hide results for out of range addresses",
     href: "/projects/hide-results-for-out-of-range-addresses",
     icon: <MapPin className="h-4 w-4 flex-shrink-0" />,
-    disabled: true,
     difficulty: "medium",
   },
   {
     id: 4,
     title: "Add loading states",
     icon: <Loader className="h-4 w-4 flex-shrink-0" />,
-    disabled: true,
     difficulty: "medium",
   },
   {
@@ -53,14 +50,12 @@ const projects = [
     title: "Display the 3 closest polling locations",
     href: "/projects/show-options-for-the-3-nearest-polling-places",
     icon: <MapPin className="h-4 w-4 flex-shrink-0" />,
-    disabled: true,
     difficulty: "hard",
   },
   {
     id: 6,
     title: "Make the current route shareable",
     icon: <Share2 className="h-4 w-4 flex-shrink-0" />,
-    disabled: true,
     difficulty: "expert",
   },
 ];
@@ -90,14 +85,13 @@ export default function ProjectListDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Remaining Tasks</DropdownMenuLabel>
+        <DropdownMenuLabel>Open Tickets</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {projects.map((project) => (
           <DropdownMenuItem
             key={project.id}
             className="flex items-center py-2"
             asChild
-            disabled={project.disabled}
           >
             <Link href={project.href ?? ""}>
               <div className="mr-2 flex flex-shrink-0 items-center">

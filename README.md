@@ -1,281 +1,77 @@
 # VoteBoston
 
-**VoteBoston** is an interactive Next.js application designed to help Boston residents find their nearest polling locations. This project serves as an educational tool for demonstrating how to build a useful web application using AI tools and prompt engineering.
-
-## Table of Contents
-
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-  - [1. Clone the Repository](#1-clone-the-repository)
-  - [2. Generate a Google Maps API Key](#2-generate-a-google-maps-api-key)
-  - [3. Set Up Environment Variables](#3-set-up-environment-variables)
-  - [4. Install Dependencies](#4-install-dependencies)
-  - [5. Run the Development Server](#5-run-the-development-server)
-- [Security Considerations](#security-considerations)
-- [Extending the Project](#extending-the-project)
-  - [1. Complete the Voting Squad Feature](#1-complete-the-voting-squad-feature)
-  - [2. Enhance User Experience](#2-enhance-user-experience)
-  - [3. Implement User Authentication](#3-implement-user-authentication)
-  - [4. Integrate Additional APIs](#4-integrate-additional-apis)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Features
-
-- **Address Autocomplete:** Utilizes Google Maps Places API to provide real-time address suggestions as users type.
-- **Nearest Polling Location Finder:** Parses a CSV dataset to identify and display the closest polling location based on user input.
-- **Interactive Map:** Displays user and polling location markers with walking directions rendered on Google Maps.
-- **Responsive Design:** Ensures a seamless experience across various devices and screen sizes.
-- **Voting Squad Feature:** _(Upcoming)_ Allows users to create a group of voters to collaborate on voting locations.
+**VoteBoston** is a web app to help Boston residents find their nearest polling location using polling location data from the [city of Boston](https://data.boston.gov/dataset/polling-locations-20221). It is intentionally incomplete but includes instructions on how to finish the project with prompt engineering. By the end of the project, you will have a working web app that allows users to find their nearest polling location.
 
 ## Prerequisites
 
-Before you begin, ensure you have met the following requirements:
+You must first create a Replit account at [Replit](https://replit.com/). Then, request an invite link from <a href="mailto:trevoruptain@gmail.com">Trevor</a> (students will get a link before class).
 
-- **Node.js**: Install the latest LTS version from [Node.js Official Website](https://nodejs.org/).
-- **npm or Yarn**: Package managers for JavaScript. npm comes bundled with Node.js.
-- **Google Cloud Account**: To generate and manage your Google Maps API key.
+You will also need a [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai), or [Gemini](https://gemini.google.com) account to complete the prompt engineering exercises.
 
-## Getting Started
+## Setup
 
-Follow these steps to set up and run VoteBoston on your local machine.
+### Step 1: Run the app
 
-### 1. Clone the Repository
+Once you're in the Replit workspace, click the Run button at the top of the page:
 
-```bash
-git clone https://github.com/your-username/voteboston.git
-cd voteboston
+![Run button](./public/images/run-button.png)
+
+It will take a minute or so to start the app.
+
+### Step 2: View the app
+
+Once the app is running, click on the Webview button. You should be able to see and interact with the app. Try typing an address into the search bar and selecting an option from the dropdown:
+
+![Webview](./public/images/webview.png)
+
+### Step 3: View the files
+
+You can view the files in the Replit workspace in the left sidebar:
+
+![Files](./public/images/files.png)
+
+This is a Next.js app written with TypeScript. It contains both the frontend and backend code in a single project.
+
+Open `app/data/polling-locations.csv`. This is the polling location data from the city of Boston.
+
+Open `app/api/nearest-polling-location/route.ts` and take a look at the code. This is the backend HTTP route that is called when you search for a polling location. It returns the single nearest polling location from a list of polling locations given a latitude and longitude.
+
+Open `app/page.tsx` and take a look at the code. This is the frontend code that loads Google Maps and allows you to search for a polling location.
+
+This code may feel a bit out of your depth, especially if you don't have experience with TypeScript or Next.js. That's okay! The whole point of this project is to let AI do the heavy lifting for us. With prompt engineering, it's sometimes better to understand the code at a high level, rather than in depth.
+
+Our goal here is to good in the world by **making it easy for Boston residents to find their nearest polling location**. However, while we've made a lot of progress, this app is not ready to ship to real users yet. Here are just some of the issues that we need to fix:
+
+- You may have noticed that the page content "jumps" to the middle of the page momentarily the first time you select an address. We need to add a loading state while the map loads.
+- We should present at least 2-3 alternative polling locations if they're relatively close to the target address. By limiting the user to a single location, we may unintentionally hinder their voting experience.
+
+In the next step, we'll use AI to fix these and other issues.
+
+### Step 4: Prompt Engineering
+
+In the top right corner of the page, there is a button with a code icon. Click it to view the open tickets for this project:
+
+![Open tickets](./public/images/open-tickets.png)
+
+The tickets are color coded by difficulty. Start at the top and work your way down.
+
+Each ticket page contains instructions and ideas for how to complete the ticket with prompt engineering. Follow these guidelines to complete the remaining tickets successfully:
+
+- **Do not modify the code directly**. Instead, use prompt engineering to change the code in a way that fixes the issue.
+- **Start with a high-level overview of the code**. Understand the basics of what you're trying to accomplish before you ask for help from AI.
+- **Paste the entire file you need to change into the prompt**. This ensures that the AI has all the information it needs to make the changes. In some cases, you may need to paste multiple files into the prompt.
+- **Coach the AI step by step**. If you have an idea of how to fix the issue, suggest it to the AI. If there is a part of the code that you don't understand, tell the AI what is confusing you.
+- **Let AI resolve bugs and edge cases**. You can resolve small bugs yourself, but if the AI gives you code containing a bug, ask it to fix the bug. Give it examples, logs, and your inklings of what the problem might be.
+- **Use the hints**. Each task page contains a hint section that provides an example prompt you can use to complete the task. However, you should try to complete the task without using the hint first.
+
+You should use a good system prompt that instructs the AI to make minimal changes to out-of-scope parts of the code. Here is a simple one that you can try:
+
 ```
+Respond with thoughtful, well-written, clean code. Only include comments which should end up in the production code.
 
-### 2. Generate a Google Maps API Key
-
-To enable the map functionalities, you'll need a Google Maps API key.
-
-1. **Create a Project in Google Cloud Console:**
-
-   - Navigate to the [Google Cloud Console](https://console.cloud.google.com/).
-   - Click on **Select a project** and then **New Project**.
-   - Enter a project name (e.g., `VoteBoston`) and click **Create**.
-
-2. **Enable Required APIs:**
-
-   - Within your project, go to **APIs & Services > Library**.
-   - Enable the following APIs:
-     - **Maps JavaScript API**
-     - **Places API**
-     - **Directions API**
-     - **Geocoding API**
-
-3. **Generate an API Key:**
-
-   - Go to **APIs & Services > Credentials**.
-   - Click on **Create Credentials > API Key**.
-   - Copy the generated API key.
-
-4. **Restrict Your API Key:**
-
-   - Click on your newly created API key to edit its restrictions.
-   - **Application Restrictions:**
-     - Select **HTTP referrers (web sites)**.
-     - Add your development domain, e.g., `http://localhost:3000/*`.
-   - **API Restrictions:**
-     - Restrict the key to the APIs you enabled earlier.
-   - Save the changes.
-
-   **⚠️ Important:** Never expose your API key in public repositories or client-side code without restrictions.
-
-### 3. Set Up Environment Variables
-
-Create a `.env.local` file in the root directory of the project to securely store your API key.
-
-```bash
-touch .env.local
+Focus on the task at hand. Do not make unnecessary material changes to the code, comments, format, or styling - they may exist for a reason.
 ```
-
-Add the following line to `.env.local`:
-
-```env
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
-```
-
-_Replace `your_google_maps_api_key_here` with the API key you obtained earlier._
-
-### 4. Install Dependencies
-
-Use npm or Yarn to install the required dependencies.
-
-**Using npm:**
-
-```bash
-npm install
-```
-
-**Using Yarn:**
-
-```bash
-yarn install
-```
-
-### 5. Run the Development Server
-
-Start the development server to view the application locally.
-
-**Using npm:**
-
-```bash
-npm run dev
-```
-
-**Using Yarn:**
-
-```bash
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser to see VoteBoston in action.
-
-## Security Considerations
-
-When deploying VoteBoston to production, it's crucial to secure your Google Maps API key to prevent unauthorized usage and potential billing issues.
-
-1. **Restrict API Key Usage:**
-
-   - **HTTP Referrers:** Limit the key to your production domain (e.g., `https://yourdomain.com/*`).
-   - **API Restrictions:** Ensure the key is only authorized to use the necessary APIs (Maps JavaScript API, Places API, Directions API, Geocoding API).
-
-2. **Do Not Expose API Keys:**
-
-   - Avoid committing `.env.local` or any files containing sensitive information to version control.
-   - Use environment variables and secure secrets management practices in your deployment setup.
-
-3. **Monitor API Usage:**
-   - Regularly check your Google Cloud Console for API usage and set up billing alerts to monitor unexpected spikes.
-
-## Extending the Project
-
-VoteBoston provides a solid foundation, but there's ample opportunity to enhance and expand its functionalities. Here are some ideas to take the project further:
-
-### 1. Complete the Voting Squad Feature
-
-**Description:** Enable users to create a group (Voting Squad) to collaborate on voting plans.
-
-**Getting Started:**
-
-- **User Authentication:** Implement user login/signup using NextAuth.js or another authentication library.
-- **Group Management:** Allow users to create, join, and manage squads.
-- **Real-Time Collaboration:** Integrate WebSockets or use services like Firebase to enable real-time updates within squads.
-- **Voting Plans:** Allow squads to plan their voting routes, share information, and track attendance.
-
-**Resources:**
-
-- [NextAuth.js Documentation](https://next-auth.js.org/)
-- [Firebase Realtime Database](https://firebase.google.com/products/realtime-database)
-- [WebSockets in Next.js](https://nextjs.org/docs/advanced-features/custom-server)
-
-### 2. Enhance User Experience
-
-- **Loading Indicators:** Implement more refined loading states or skeleton screens to improve perceived performance.
-- **Responsive Design:** Optimize the UI for various devices, including tablets and smartphones.
-- **Accessibility:** Ensure that all interactive elements are accessible via keyboard navigation and screen readers.
-
-### 3. Implement User Authentication
-
-- **Secure Access:** Restrict certain features to authenticated users.
-- **Profile Management:** Allow users to manage their profiles, view past voting squads, and track their voting history.
-
-### 4. Integrate Additional APIs
-
-- **Voting Information API:** Provide users with detailed information about their voting process, requirements, and deadlines.
-- **Social Sharing:** Enable users to share their voting plans or squad details on social media platforms.
-- **Analytics:** Integrate analytics tools to track user engagement and app performance.
-
-### 5. Optimize Performance
-
-- **Caching:** Implement server-side caching for API responses to reduce latency.
-- **Lazy Loading:** Load heavy components like maps only when necessary to improve initial load times.
-
-### 6. Expand Polling Locations Data
-
-- **Dynamic Data Source:** Connect to a live database or API for real-time polling locations updates.
-- **User-Submitted Locations:** Allow users to suggest or verify polling locations.
-
-## Troubleshooting
-
-If you encounter issues while setting up or running VoteBoston, consider the following troubleshooting steps:
-
-1. **Google Maps API Issues:**
-
-   - **Invalid API Key:** Ensure that the API key is correctly added to `.env.local` and is active.
-   - **API Restrictions:** Verify that the API key has the necessary API permissions and is restricted to the correct domains.
-
-2. **Environment Variables Not Loading:**
-
-   - **Server Restart:** After creating or modifying `.env.local`, restart the development server.
-   - **Naming:** Ensure the environment variable is prefixed with `NEXT_PUBLIC_` to be accessible on the client side.
-
-3. **Dependency Errors:**
-
-   - **Install Dependencies:** Run `npm install` or `yarn install` to ensure all dependencies are installed.
-   - **Version Compatibility:** Check for any version conflicts or deprecated packages.
-
-4. **Infinite Reloads or Duplicate Markers:**
-
-   - **Component Rendering:** Ensure that components like `Map` are not being rendered multiple times unintentionally.
-   - **State Management:** Verify that state updates within `useEffect` hooks are not causing re-render loops.
-
-5. **Console Errors:**
-   - **Inspect Errors:** Open the browser's developer console to identify specific error messages.
-   - **Search Solutions:** Look up error messages online or refer to documentation for guidance.
 
 ## Contributing
 
-Contributions are welcome! If you'd like to enhance VoteBoston, please follow these steps:
-
-1. **Fork the Repository:**
-
-   Click the **Fork** button at the top right of the repository page to create your own copy.
-
-2. **Clone the Forked Repository:**
-
-   ```bash
-   git clone https://github.com/your-username/voteboston.git
-   cd voteboston
-   ```
-
-3. **Create a New Branch:**
-
-   ```bash
-   git checkout -b feature/YourFeatureName
-   ```
-
-4. **Make Your Changes:**
-
-   Implement your feature or fix issues as desired.
-
-5. **Commit Your Changes:**
-
-   ```bash
-   git commit -m "Add Your Feature Description"
-   ```
-
-6. **Push to Your Fork:**
-
-   ```bash
-   git push origin feature/YourFeatureName
-   ```
-
-7. **Create a Pull Request:**
-
-   Navigate to the original repository and create a pull request from your fork.
-
-**Please ensure that your contributions adhere to the project's coding standards and include relevant tests where applicable.**
-
-## License
-
-This project is licensed under the MIT License.
-
----
-
-_Thank you for using VoteBoston! We hope this project serves as a valuable learning tool and inspires further innovation._
+If you made a great change and would like to contribute it to the project, please create a pull request on [GitHub](https://github.com/trevoruptain/vote-boston).
