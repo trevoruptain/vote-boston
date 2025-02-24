@@ -30,7 +30,7 @@ const projects = [
   },
   {
     id: 2,
-    title: "2.Get the most useful directions based on distance",
+    title: "2. Get the most useful directions based on distance",
     href: "/projects/get-the-most-useful-directions-based-on-distance",
     icon: <Navigation className="h-4 w-4 flex-shrink-0" />,
     difficulty: "easy",
@@ -45,24 +45,16 @@ const projects = [
   {
     id: 4,
     title: "4. Add loading states",
+    href: "/projects/add-loading-states",
     icon: <Loader className="h-4 w-4 flex-shrink-0" />,
     difficulty: "medium",
-    disabled: true,
   },
   {
     id: 5,
-    title: "5. Display the 3 closest polling locations",
-    href: "/projects/show-options-for-the-3-nearest-polling-places",
-    icon: <MapPin className="h-4 w-4 flex-shrink-0" />,
-    difficulty: "hard",
-    disabled: true,
-  },
-  {
-    id: 6,
-    title: "6. Make the current route shareable",
+    title: "5. Make the current route shareable",
+    href: "/projects/make-the-current-route-shareable",
     icon: <Share2 className="h-4 w-4 flex-shrink-0" />,
     difficulty: "expert",
-    disabled: true,
   },
 ];
 
@@ -102,7 +94,6 @@ export default function ProjectListDropdown() {
               currentPath === project.href ? "bg-gray-100" : ""
             }`}
             asChild
-            disabled={project.disabled}
           >
             <Link href={project.href ?? ""}>
               <div className="mr-2 flex flex-shrink-0 items-center">
