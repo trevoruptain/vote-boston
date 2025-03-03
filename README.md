@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-You must first create a [Replit account](https://replit.com/). Then, request an API key using [this form](https://tally.so/r/w4p5qY) (students will receive the password for the form via email).
+You must first create a [Replit account](https://replit.com/) and remix the [Vote Boston application](https://replit.com/@TrevorUptain1/vote-boston). Then, request an API key using [this form](https://tally.so/r/w4p5qY) (students will receive the password for the form via email).
 
 You will also need a [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai), or [Gemini](https://gemini.google.com) account to complete the prompt engineering exercises.
 
@@ -20,6 +20,14 @@ Search for 'Secrets' and click on it. Then, add the following secret to the Repl
 
 - **Key**: `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
 - **Value**: `The Google Maps API key that was emailed to you`
+
+**If you already started working on this in class:** Please be careful - do not paste the new API key directly into `.env.local`! Instead you can either 1) Delete your previous app and create a new remix or 2) Replace the existing `env.local` with the following snippet:
+
+```
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${{secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}}
+```
+
+Then follow the instructions above to add `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` as an environment variable in Replit.
 
 ### Step 2: Run the app
 
