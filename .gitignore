@@ -26,7 +26,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+# TODO: If you clone this repo, make sure to uncomment this line
+# .env*.local
 
 # vercel
 .vercel

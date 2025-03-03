@@ -4,13 +4,24 @@
 
 ## Prerequisites
 
-You must first create a [Replit account](https://replit.com/). Then, request an invite link from <a href="mailto:trevoruptain@gmail.com">Trevor</a> (students will get a link before class).
+You must first create a [Replit account](https://replit.com/). Then, request an API key using [this form](https://tally.so/r/w4p5qY) (students will receive the password for the form via email).
 
 You will also need a [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai), or [Gemini](https://gemini.google.com) account to complete the prompt engineering exercises.
 
 ## Setup
 
-### Step 1: Run the app
+### Step 1: Add your API key to Replit
+
+In the Replit workspace, click the 'All Tools' button on the left sidebar.
+
+![All Tools](./public/images/all-tools.png)
+
+Search for 'Secrets' and click on it. Then, add the following secret to the Replit environment:
+
+- **Key**: `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
+- **Value**: `The Google Maps API key that was emailed to you`
+
+### Step 2: Run the app
 
 Once you're in the Replit workspace, click the Run button at the top of the page:
 
@@ -18,13 +29,13 @@ Once you're in the Replit workspace, click the Run button at the top of the page
 
 It will take a minute or so to start the app.
 
-### Step 2: View the app
+### Step 3: View the app
 
 Once the app is running, click on the Webview button. You should be able to see and interact with the app. Try typing an address into the search bar and selecting an option from the dropdown:
 
 ![Webview](./public/images/webview.png)
 
-### Step 3: View the files
+### Step 4: View the files
 
 You can view the files in the Replit workspace in the left sidebar:
 
@@ -49,7 +60,7 @@ The goal of this app is to make it easy for Boston residents to find their neare
 
 In the next step, we'll use AI to fix these and other issues that currently block us from shipping to production.
 
-### Step 4: Prompt Engineering
+### Step 5: Prompt Engineering
 
 In the top right corner of the page, there is a button with a code icon. Click it to view the open tickets for this project:
 
@@ -77,3 +88,22 @@ Focus on the task at hand. Do not make unnecessary material changes to the code,
 ## Contributing
 
 If you made a great change and would like to contribute it to the project, please create a pull request on [GitHub](https://github.com/trevoruptain/vote-boston).
+
+## Using your own API key
+
+If you want to use your own API key, create a GCP account and enable the Google Maps API. Then, create an API key on the Credentials page and restrict it to Replit:
+
+![Restrict API key](./public/images/restrict-api-key.png)
+
+Then, add the API key to the Replit environment:
+
+- **Key**: `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
+- **Value**: `Your Google Maps API key`
+
+For local development, use the real API key in `.env.local`:
+
+```
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_api_key
+```
+
+Before commiting to GitHub, uncomment the `.env.local` file in `.gitignore` (see the comment in the file).
